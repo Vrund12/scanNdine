@@ -1,0 +1,60 @@
+import React from 'react';
+import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
+
+const Inventory = () => {
+  const dishes = [
+    { id: 1, name: 'Margherita Pizza', available: true },
+    { id: 2, name: 'Chicken Biryani', available: false },
+    { id: 3, name: 'Caesar Salad', available: true },
+    { id: 4, name: 'Pasta Alfredo', available: false },
+    { id: 5, name: 'Sushi Platter', available: true },
+  ];
+
+  return (
+    <div className="bg-white p-6 rounded-lg shadow-md mt-6 w-full max-w-4xl mx-auto">
+      <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">📦 Inventory Status</h2>
+      
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-200">
+          <thead className="bg-gray-100">
+            <tr>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
+                Dish Name
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
+                Availability
+              </th>
+            </tr>
+          </thead>
+          <tbody className="bg-white divide-y divide-gray-200">
+            {dishes.map((dish) => (
+              <tr key={dish.id} className="hover:bg-gray-50 transition">
+                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
+                  {dish.name}
+                </td>
+                <td className="px-6 py-4 whitespace-nowrap text-sm">
+                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-white text-sm font-semibold 
+                    ${dish.available ? 'bg-green-500' : 'bg-red-500'}`}>
+                    {dish.available ? (
+                      <>
+                        <CheckCircleIcon className="w-4 h-4 mr-1" />
+                        Available
+                      </>
+                    ) : (
+                      <>
+                        <XCircleIcon className="w-4 h-4 mr-1" />
+                        Unavailable
+                      </>
+                    )}
+                  </span>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+};
+
+export default Inventory;
