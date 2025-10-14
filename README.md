@@ -2,7 +2,8 @@
 
 -> It is a MERN stack web application service for the ease of customers as they can order on their own without any need of waiters.
 
-#Technologies used
+## **Technologies used**
+
 Frontend
   -> ReactJs + Tailwind CSS
 
