@@ -1,14 +1,26 @@
 import React from 'react';
 import { CheckCircleIcon, XCircleIcon } from '@heroicons/react/24/solid';
+import { useState, useEffect } from 'react';
+import axios from 'axios'
+
 
 const Inventory = () => {
-  const dishes = [
-    { id: 1, name: 'Margherita Pizza', available: true },
-    { id: 2, name: 'Chicken Biryani', available: false },
-    { id: 3, name: 'Caesar Salad', available: true },
-    { id: 4, name: 'Pasta Alfredo', available: false },
-    { id: 5, name: 'Sushi Platter', available: true },
-  ];
+  // const dishes = [
+  //   { id: 1, name: 'Margherita Pizza', available: true },
+  //   { id: 2, name: 'Chicken Biryani', available: false },
+  //   { id: 3, name: 'Caesar Salad', available: true },
+  //   { id: 4, name: 'Pasta Alfredo', available: false },
+  //   { id: 5, name: 'Sushi Platter', available: true },
+  // ];
+  const [dishes, setDishes] = useState([])
+  
+  useEffect(() => {
+    axios.get('api/scanNdine/Inventory')
+    .then((response) => {
+      setDishes(response.data)
+    .catch((err) => console.log(err))
+    })
+  })
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-md mt-6 w-full max-w-4xl mx-auto">
@@ -30,12 +42,12 @@ const Inventory = () => {
             {dishes.map((dish) => (
               <tr key={dish.id} className="hover:bg-gray-50 transition">
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
-                  {dish.name}
+                  {dish.Dish}
                 </td>
                 <td className="px-6 py-4 whitespace-nowrap text-sm">
                   <span className={`inline-flex items-center px-3 py-1 rounded-full text-white text-sm font-semibold 
-                    ${dish.available ? 'bg-green-500' : 'bg-red-500'}`}>
-                    {dish.available ? (
+                    ${dish.Availability === 'available' ? 'bg-green-500' : 'bg-red-500'}`}>
+                    {dish.Availability === 'available' ? (
                       <>
                         <CheckCircleIcon className="w-4 h-4 mr-1" />
                         Available
