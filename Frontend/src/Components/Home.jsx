@@ -1,6 +1,19 @@
 import { DollarSign, Users , ShoppingBag} from "lucide-react";
+import axios from 'axios'
+import {useState, useEffect} from "react"
 
 export default function Home() {
+
+  const [orders, setOrders]  = useState([])
+
+  useEffect(() => {
+    axios.get('api/scanNdine/Order-details')
+    .then((response) => {
+      setOrders(response.data)
+    .catch((err) => console.log(err))
+    })
+  })
+
   return (
     // <div className="space-y-6">
     //   {/* Row 1 - Stats */}
@@ -59,7 +72,7 @@ export default function Home() {
         <div className="bg-white shadow rounded-2xl p-6 flex items-center justify-between">
           <div>
             <h2 className="text-gray-500 text-sm font-medium">Total Orders</h2>
-            <p className="text-2xl font-bold mt-2">320</p>
+            <p className="text-2xl font-bold mt-2">{orders.length}</p>
           </div>
           <ShoppingBag className="text-blue-600 w-10 h-10" />
         </div>
@@ -78,21 +91,20 @@ export default function Home() {
               </tr>
             </thead>
             <tbody>
-              <tr className="border-b">
-                <td className="p-3">#101</td>
-                <td className="p-3">Table 5</td>
-                <td className="p-3 text-green-600 font-medium">Completed</td>
+              {orders.length === 0 ? (
+              <tr>
+                <td colSpan="4" style={{ textAlign: "center", padding: "10px" }}>
+                  No Orders Found 📭
+                </td>
               </tr>
-              <tr className="border-b">
-                <td className="p-3">#102</td>
-                <td className="p-3">Table 2</td>
-                <td className="p-3 text-yellow-600 font-medium">Pending</td>
+            ) : (
+              orders.map((order) => {
+                <tr className="border-b" key={order.id}>
+                <td className="p-3">{order.orderId}</td>
+                <td className="p-3">{order.tableNo}</td>
+                <td className="p-3 text-green-600 font-medium">{order.status}</td>
               </tr>
-              <tr className="border-b">
-                <td className="p-3">#103</td>
-                <td className="p-3">Table 8</td>
-                <td className="p-3 text-red-600 font-medium">Cancelled</td>
-              </tr>
+              }))}
             </tbody>
           </table>
         </div>
