@@ -1,47 +1,58 @@
-import React, { useState } from "react";
+import React, { useState, useEffect} from "react";
 import axios from "axios";
 
-const menu = {
-  Starters: [
-    {
-      name: "Garlic Bread",
-      desc: "Toasted bread with garlic, butter, and herbs.",
-      price: 4.99,
-      available: true,
-      image:
-        "https://imgs.search.brave.com/cxGx7pEQypsG9i7ngpjiN1FqF-GL_UX6z0pqiqRwxU8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zb3V0/aGVybmJpdGUuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIy/LzA5L0Jlc3QtR2Fy/bGljLUJyZWFkLTIu/anBn",
-    },  
-    {
-      name: "Bruschetta",
-      desc: "Grilled bread topped with fresh tomatoes and basil.",
-      price: 5.49,
-      available: false,
-      image:
-        "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
-    },
-  ],
-  Mains: [
-    {
-      name: "Margherita Pizza",
-      desc: "Classic pizza with fresh tomatoes and mozzarella.",
-      price: 9.99,
-      available: true,
-      image:
-        "https://imgs.search.brave.com/ckubvZvQ_kvJUne1oUFltvDWpVKG6P0xzoD-vNEZ8hQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9jbGFzc2ljLW1h/cmdhcml0YS1waXp6/YS13aXRoLW1venph/cmVsbGEtdG9tYXRv/ZXMtYmFzaWwtaXRh/bGlhbi1waXp6YS1j/b21wb3NpdGlvbi13/aXRoLWluZ3JlZGll/bnRzLXdoaXRlLXRh/YmxlLXRvcC12aWV3/LWZvb2QtZmxhdC1s/YXlfMjA3MTI2LTIx/NzkuanBnP3NlbXQ9/YWlzX2h5YnJpZCZ3/PTc0MA",
-    },
-    {
-      name: "Chicken Alfredo",
-      desc: "Creamy Alfredo pasta with grilled chicken.",
-      price: 12.49,
-      available: true,
-      image:
-        "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80",
-    },
-  ],
-};
+// const menu = {
+//   Starters: [
+//     {
+//       name: "Garlic Bread",
+//       desc: "Toasted bread with garlic, butter, and herbs.",
+//       price: 4.99,
+//       available: true,
+//       image:
+//         "https://imgs.search.brave.com/cxGx7pEQypsG9i7ngpjiN1FqF-GL_UX6z0pqiqRwxU8/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9zb3V0/aGVybmJpdGUuY29t/L3dwLWNvbnRlbnQv/dXBsb2Fkcy8yMDIy/LzA5L0Jlc3QtR2Fy/bGljLUJyZWFkLTIu/anBn",
+//     },  
+//     {
+//       name: "Bruschetta",
+//       desc: "Grilled bread topped with fresh tomatoes and basil.",
+//       price: 5.49,
+//       available: false,
+//       image:
+//         "https://images.unsplash.com/photo-1504674900247-0877df9cc836?auto=format&fit=crop&w=800&q=80",
+//     },
+//   ],
+//   Mains: [
+//     {
+//       name: "Margherita Pizza",
+//       desc: "Classic pizza with fresh tomatoes and mozzarella.",
+//       price: 9.99,
+//       available: true,
+//       image:
+//         "https://imgs.search.brave.com/ckubvZvQ_kvJUne1oUFltvDWpVKG6P0xzoD-vNEZ8hQ/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9pbWcu/ZnJlZXBpay5jb20v/cHJlbWl1bS1waG90/by9jbGFzc2ljLW1h/cmdhcml0YS1waXp6/YS13aXRoLW1venph/cmVsbGEtdG9tYXRv/ZXMtYmFzaWwtaXRh/bGlhbi1waXp6YS1j/b21wb3NpdGlvbi13/aXRoLWluZ3JlZGll/bnRzLXdoaXRlLXRh/YmxlLXRvcC12aWV3/LWZvb2QtZmxhdC1s/YXlfMjA3MTI2LTIx/NzkuanBnP3NlbXQ9/YWlzX2h5YnJpZCZ3/PTc0MA",
+//     },
+//     {
+//       name: "Chicken Alfredo",
+//       desc: "Creamy Alfredo pasta with grilled chicken.",
+//       price: 12.49,
+//       available: true,
+//       image:
+//         "https://images.unsplash.com/photo-1589302168068-964664d93dc0?auto=format&fit=crop&w=800&q=80",
+//     },
+//   ],
+// };
 
 const UserMenu = () => {
+  const [menu, setmenu] = useState([])
   const [cart, setCart] = useState([]);
+
+  useEffect(() => {
+  axios.get('api/scanNdine/menu')
+  .then((response) => {
+    setmenu(response.data)
+  .catch((error) => {
+    console.log(error)
+  })
+  })
+})
 
   // 🛒 Add item to cart
   const addToCart = (item) => {
