@@ -12,7 +12,7 @@ app.use(cors({
 }));
 
 connectMongoDB("mongodb+srv://vrundpatel:9sIzBwwqnqArChoj@cluster0.vvhrmgo.mongodb.net/scanNdine?retryWrites=true&w=majority")
-.then(() => console.log('MongoDB connected'))
+.then(() => console.log('MongoDB connected')).catch((error)=>console.error("Error in DatabaseConnection",error));
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
