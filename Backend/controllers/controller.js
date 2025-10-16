@@ -32,9 +32,7 @@ async function GetOrderDetails (req, res) {
     }
 }
 
-async function PlaceOrder(req, res) {
-    
-}
+
 async function POSTRoute(req, res) {
   try {
     const { items, tableNo, status, orderId } = req.body;
@@ -52,11 +50,22 @@ async function POSTRoute(req, res) {
       return res.status(400).json({ msg: "Order status is required" });
     }
 
+    const totalAmount = items.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+    if (totalAmount <= 0) {
+      return res
+        .status (400)
+        .json ({ msg: "Total amount must be greater than 0"});
+    }
+
     const newOrder = new Orders({
       orderId,
       tableNo,
       status,
       items,
+      totalAmount
     });
 
     await newOrder.save();
