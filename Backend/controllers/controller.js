@@ -32,6 +32,10 @@ async function GetOrderDetails (req, res) {
     }
 }
 
+async function PlaceOrder(req, res) {
+    
+}
+
 module.exports = {
    GetEmpDetails,
    GetInvenDetails,

@@ -9,6 +9,13 @@ const OrdersSchema = new mongoose.Schema({
     tableNo: Number,
     status: String,
     totalAmount: Number,
+    items: [
+    {
+      name: String,
+      price: Number,
+      quantity: Number
+    }
+  ]
 
 })
 

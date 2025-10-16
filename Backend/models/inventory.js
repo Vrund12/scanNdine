@@ -9,8 +9,11 @@ const InvenSchema = new mongoose.Schema({
     Availability: {
         type: String,
         required: true,        
+    },
+    Price: {
+        type: String,
+        required: true
     }
-
 })
 
 const Inventory = mongoose.model('Inventory', InvenSchema)

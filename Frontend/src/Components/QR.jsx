@@ -2,7 +2,7 @@ import {QRCodeCanvas}from 'qrcode.react';
 
 
 function QR() {
-  const url = 'http://192.168.66.167:5173/user'; // replace with your actual IP
+  const url = 'http://192.168.66.167:5173/user?table=1'; // replace with your actual IP
 
   return (
     <div className="p-4 bg-white rounded shadow-md">
