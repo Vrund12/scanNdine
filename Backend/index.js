@@ -16,7 +16,9 @@ connectMongoDB("mongodb+srv://vrundpatel:9sIzBwwqnqArChoj@cluster0.vvhrmgo.mongo
 
 app.use(express.json());
 app.use(express.urlencoded({extended: false}))
-
+app.get('/', (req, res) => {
+  res.send('✅ Backend is working');
+});
 app.use('/api/scanNdine', router)
 
 app.listen(PORT,"0.0.0.0", () => console.log('Server Started at Port:',PORT))
