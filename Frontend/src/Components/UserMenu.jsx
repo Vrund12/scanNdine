@@ -81,7 +81,6 @@ const UserMenu = () => {
     );
 
     const orderData = {
-      customerName: "John Doe", // replace with real user if needed
       tableNumber: 5, // replace with dynamic table if needed
       items: cart.map((item) => ({
         name: item.name,

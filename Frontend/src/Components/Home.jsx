@@ -1,4 +1,4 @@
-import { DollarSign, Users , ShoppingBag} from "lucide-react";
+import { DollarSign, Users , ShoppingBag, IndianRupee} from "lucide-react";
 import axios from 'axios'
 import {useState, useEffect} from "react"
 
@@ -10,52 +10,12 @@ export default function Home() {
     axios.get('api/scanNdine/Order-details')
     .then((response) => {
       setOrders(response.data)
-    .catch((err) => console.log(err))
     })
+    .catch((err) => console.log(err))
   })
+  const totalSum = orders.reduce((sum, order) => sum + order.totalAmount, 0)
 
   return (
-    // <div className="space-y-6">
-    //   {/* Row 1 - Stats */}
-    //   <div className="grid grid-cols-2 gap-6">
-    //     {/* Revenue Card */}
-    //     <div className="bg-white shadow rounded-xl p-6 flex flex-col items-center justify-center">
-    //       <DollarSign size={32} className="text-green-600 mb-2" />
-    //       <h2 className="text-lg font-semibold">Total Revenue</h2>
-    //       <p className="text-2xl font-bold text-gray-800 mt-2">$12,345</p>
-    //     </div>
-
-    //     {/* Customers Card */}
-    //     <div className="bg-white shadow rounded-xl p-6 flex flex-col items-center justify-center">
-    //       <Users size={32} className="text-blue-600 mb-2" />
-    //       <h2 className="text-lg font-semibold">Total Customers</h2>
-    //       <p className="text-2xl font-bold text-gray-800 mt-2">245</p>
-    //     </div>
-    //   </div>
-
-    //   {/* Row 2 - Orders List */}
-    //   <div className="bg-white shadow rounded-xl p-6">
-    //     <h2 className="text-lg font-semibold mb-4">Recent Orders</h2>
-    //     <ul className="space-y-3">
-    //       <li className="flex justify-between border-b pb-2">
-    //         <span>Order #101</span>
-    //         <span className="font-medium">Table 5</span>
-    //       </li>
-    //       <li className="flex justify-between border-b pb-2">
-    //         <span>Order #102</span>
-    //         <span className="font-medium">Table 2</span>
-    //       </li>
-    //       <li className="flex justify-between border-b pb-2">
-    //         <span>Order #103</span>
-    //         <span className="font-medium">Table 8</span>
-    //       </li>
-    //       <li className="flex justify-between">
-    //         <span>Order #104</span>
-    //         <span className="font-medium">Table 1</span>
-    //       </li>
-    //     </ul>
-    //   </div>
-    // </div>
         <div className="p-6 space-y-6">
       {/* Top Row - Stats */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -63,11 +23,10 @@ export default function Home() {
         <div className="bg-white shadow rounded-2xl p-6 flex items-center justify-between">
           <div>
             <h2 className="text-gray-500 text-sm font-medium">Total Revenue</h2>
-            <p className="text-2xl font-bold mt-2">$12,450</p>
+            <p className="text-2xl font-bold mt-2">{totalSum}</p>
           </div>
-          <DollarSign className="text-green-600 w-10 h-10" />
+          <IndianRupee className="text-green-600 w-10 h-10" />
         </div>
-
         {/* Orders Card */}
         <div className="bg-white shadow rounded-2xl p-6 flex items-center justify-between">
           <div>
@@ -99,11 +58,14 @@ export default function Home() {
               </tr>
             ) : (
               orders.map((order) => {
-                <tr className="border-b" key={order.id}>
+                return(
+                <tr className="border-b" key={order._id}>
                 <td className="p-3">{order.orderId}</td>
                 <td className="p-3">{order.tableNo}</td>
                 <td className="p-3 text-green-600 font-medium">{order.status}</td>
               </tr>
+              )
+                
               }))}
             </tbody>
           </table>

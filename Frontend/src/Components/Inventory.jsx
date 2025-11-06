@@ -5,13 +5,7 @@ import axios from 'axios'
 
 
 const Inventory = () => {
-  // const dishes = [
-  //   { id: 1, name: 'Margherita Pizza', available: true },
-  //   { id: 2, name: 'Chicken Biryani', available: false },
-  //   { id: 3, name: 'Caesar Salad', available: true },
-  //   { id: 4, name: 'Pasta Alfredo', available: false },
-  //   { id: 5, name: 'Sushi Platter', available: true },
-  // ];
+ 
   const [dishes, setDishes] = useState([])
   
   useEffect(() => {
@@ -35,6 +29,9 @@ const Inventory = () => {
               </th>
               <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
                 Availability
+              </th>
+              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
+                <button className='cursor-pointer border border rounded-3xl p-3'>Edit Availability</button>
               </th>
             </tr>
           </thead>
