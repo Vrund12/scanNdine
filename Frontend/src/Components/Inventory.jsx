@@ -16,53 +16,110 @@ const Inventory = () => {
     .catch((err) => console.log(err))
   })
 
+  const toggleAvailability = async (id, newStatus) => {
+  try {
+    await axios.patch(`/api/scanNdine/menu/${id}/availability`, {
+      availability: newStatus,
+    });
+
+    // update UI without reload
+    setDishes((prev) => prev.map((dish) =>
+        dish._id === id
+          ? { ...dish, Availability: newStatus }
+          : dish
+           )
+       );
+  } catch (err) {
+    console.error(err);
+    alert("Failed to update availability");
+  }
+};
+
+
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md mt-6 w-full max-w-4xl mx-auto">
-      <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">📦 Inventory Status</h2>
-      
-      <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-200">
-          <thead className="bg-gray-100">
-            <tr>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
-                Dish Name
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
-                Availability
-              </th>
-              <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase tracking-wider">
-                <button className='cursor-pointer border border rounded-3xl p-3'>Edit Availability</button>
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {dishes.map((dish) => (
-              <tr key={dish._id} className="hover:bg-gray-50 transition">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
-                  {dish.Dish}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  <span className={`inline-flex items-center px-3 py-1 rounded-full text-white text-sm font-semibold 
-                    ${dish.Availability === 'available' ? 'bg-green-500' : 'bg-red-500'}`}>
-                    {dish.Availability === 'available' ? (
-                      <>
-                        <CheckCircleIcon className="w-4 h-4 mr-1" />
-                        Available
-                      </>
-                    ) : (
-                      <>
-                        <XCircleIcon className="w-4 h-4 mr-1" />
-                        Unavailable
-                      </>
-                    )}
-                  </span>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    </div>
+   <div className="bg-white p-6 rounded-lg shadow-md mt-6 w-full max-w-4xl mx-auto">
+  <h2 className="text-2xl font-semibold text-gray-800 mb-6 border-b pb-2">
+    📦 Inventory Status
+  </h2>
+
+  <div className="overflow-x-auto">
+    <table className="min-w-full divide-y divide-gray-200">
+      <thead className="bg-gray-100">
+        <tr>
+          <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase">
+            Dish Name
+          </th>
+          <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase">
+            Availability
+          </th>
+          <th className="px-6 py-3 text-left text-sm font-medium text-gray-700 uppercase">
+            Action
+          </th>
+        </tr>
+      </thead>
+
+      <tbody className="bg-white divide-y divide-gray-200">
+        {dishes.map((dish) => (
+          <tr key={dish._id} className="hover:bg-gray-50 transition">
+            {/* Dish Name */}
+            <td className="px-6 py-4 text-sm text-gray-900 font-medium">
+              {dish.Dish}
+            </td>
+
+            {/* Availability Badge */}
+            <td className="px-6 py-4 text-sm">
+              <span
+                className={`inline-flex items-center px-3 py-1 rounded-full text-white text-sm font-semibold 
+                ${
+                  dish.Availability === "available"
+                    ? "bg-green-500"
+                    : "bg-red-500"
+                }`}
+              >
+                {dish.Availability === "available" ? (
+                  <>
+                    <CheckCircleIcon className="w-4 h-4 mr-1" />
+                    Available
+                  </>
+                ) : (
+                  <>
+                    <XCircleIcon className="w-4 h-4 mr-1" />
+                    Unavailable
+                  </>
+                )}
+              </span>
+            </td>
+
+            {/* Toggle Button */}
+            <td className="px-6 py-4 text-sm">
+              <button
+                onClick={() =>
+                  toggleAvailability(
+                    dish._id,
+                    dish.Availability === "available"
+                      ? "unavailable"
+                      : "available"
+                  )
+                }
+                className={`px-4 py-2 rounded-lg text-white text-sm font-medium
+                ${
+                  dish.Availability === "available"
+                    ? "bg-red-600 hover:bg-red-700"
+                    : "bg-green-600 hover:bg-green-700"
+                }`}
+              >
+                {dish.Availability === "available"
+                  ? "Mark Unavailable"
+                  : "Mark Available"}
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+</div>
+
   );
 };
 

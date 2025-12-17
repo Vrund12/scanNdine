@@ -42,10 +42,10 @@ const router = createBrowserRouter([
         path:'/qr',
         element: <QR/>
       },
-      {
-        path: '/userMenu',
-        element: <UserMenu />
-      }
+      // {
+      //   path: '/userMenu',
+      //   element: <UserMenu />
+      // }
     ]
   },
   {
@@ -53,7 +53,7 @@ const router = createBrowserRouter([
     element: <UserLayout />,
     children: [
       {
-        path: '', // this means /user
+        index: true, // this means /user
         element: <UserMenu />,
       },
     ],

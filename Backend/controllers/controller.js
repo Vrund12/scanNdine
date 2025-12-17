@@ -79,11 +79,51 @@ async function POSTRoute(req, res) {
   }
 }
  
+async function markAsServed (req, res) {
+  try {
+    const order = await Orders.findByIdAndUpdate(
+      req.params.id,
+      { status: "served" },
+      { new: true }
+    );
+
+    res.json({
+      success: true,
+      message: "Order marked as served",
+      order,
+    });
+  } catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+};
+
+async function changeAvailability (req, res) {
+  try{
+    const {Availability} = req.body
+    const InventDetails = await Inventory.findByIdAndUpdate(
+      req.params.id,
+      {Availability: "available"},
+      {new: true}
+    )
+    res.json({
+      success: true,
+      message: 'dish availability updated successfully',
+      InventDetails
+    })
+  }
+  catch (err) {
+    res.status(500).json({ success: false, message: err.message });
+  }
+}
+
+
 module.exports = { POSTRoute };
 
 module.exports = {
    GetEmpDetails,
    GetInvenDetails,
    GetOrderDetails,
-   POSTRoute
+   POSTRoute,
+   markAsServed,
+   changeAvailability
 }
