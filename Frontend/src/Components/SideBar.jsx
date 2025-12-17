@@ -1,4 +1,4 @@
-import { Home, User, Settings, HandPlatterIcon, Warehouse, Menu, MenuIcon, LucideMenu, MenuSquareIcon } from "lucide-react";
+import { Home, User, Settings, HandPlatterIcon, Warehouse, Menu, MenuIcon, LucideMenu, MenuSquareIcon, QrCode } from "lucide-react";
 import { Link } from "react-router-dom";
 
 export default function Sidebar() {
@@ -46,8 +46,15 @@ export default function Sidebar() {
        
           <Link to="/QR">
           <button className="w-full flex items-center gap-3 px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white">
-            <MenuSquareIcon size={20} />
+            <QrCode size={20} />
             <span>QR</span>
+          </button>
+        </Link>
+
+        <Link to='/userMenu'>
+          <button className="w-full flex items-center gap-3 px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white">
+            <MenuIcon size={20}/>
+            <span>User Menu</span>
           </button>
         </Link>
 

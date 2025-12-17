@@ -1,18 +1,30 @@
 import { DollarSign, Users , ShoppingBag, IndianRupee} from "lucide-react";
 import axios from 'axios'
 import {useState, useEffect} from "react"
+import OrderIdContext from "../Context/OrderIdContext";
 
 export default function Home() {
 
   const [orders, setOrders]  = useState([])
+  //const {orderId} = useContext(OrderIdContext)
 
   useEffect(() => {
     axios.get('api/scanNdine/Order-details')
     .then((response) => {
-      setOrders(response.data)
+      
+      const formattedOrders = response.data.map( details => ({
+        ...details,
+       DisplayOrderId: details._id.toString()
+                            .slice(-6)
+                            .toUpperCase()
+      }))
+      setOrders(formattedOrders)
+      
     })
     .catch((err) => console.log(err))
-  })
+  }, [])
+
+ 
   const totalSum = orders.reduce((sum, order) => sum + order.totalAmount, 0)
 
   return (
@@ -60,7 +72,7 @@ export default function Home() {
               orders.map((order) => {
                 return(
                 <tr className="border-b" key={order._id}>
-                <td className="p-3">{order.orderId}</td>
+                <td className="p-3">{order.DisplayOrderId}</td>
                 <td className="p-3">{order.tableNo}</td>
                 <td className="p-3 text-green-600 font-medium">{order.status}</td>
               </tr>

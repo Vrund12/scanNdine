@@ -1,11 +1,6 @@
 const mongoose = require('mongoose');
 
 const OrdersSchema = new mongoose.Schema({
-  orderId: {
-    type: String,
-    unique: true,
-    required: true,
-  },
   tableNo: {
     type: Number,
     required: true,
@@ -26,6 +21,11 @@ const OrdersSchema = new mongoose.Schema({
     type: Number,
     required: true,
   },
+  createdAt: {
+    type: Date,
+    default: Date.now()
+  }
+  
 });
 
 

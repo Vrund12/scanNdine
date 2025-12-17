@@ -12,8 +12,8 @@ const Inventory = () => {
     axios.get('api/scanNdine/Inventory')
     .then((response) => {
       setDishes(response.data)
-    .catch((err) => console.log(err))
     })
+    .catch((err) => console.log(err))
   })
 
   return (
@@ -37,7 +37,7 @@ const Inventory = () => {
           </thead>
           <tbody className="bg-white divide-y divide-gray-200">
             {dishes.map((dish) => (
-              <tr key={dish.id} className="hover:bg-gray-50 transition">
+              <tr key={dish._id} className="hover:bg-gray-50 transition">
                 <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900 font-medium">
                   {dish.Dish}
                 </td>

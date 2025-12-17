@@ -9,7 +9,6 @@ export default defineConfig({
    base: './', // this makes asset paths relative
   plugins: [react(), tailwindcss()],
   server: {
-    host: '0.0.0.0', // ← this line is important!
     port: 5173,
     proxy: {
       '/api': 'http://localhost:3000'

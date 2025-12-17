@@ -13,6 +13,10 @@ const InvenSchema = new mongoose.Schema({
     Price: {
         type: String,
         required: true
+    },
+    Image: {
+        type: String,
+        required: true
     }
 })
 

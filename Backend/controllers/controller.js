@@ -35,54 +35,51 @@ async function GetOrderDetails (req, res) {
 
 async function POSTRoute(req, res) {
   try {
-    const { items, tableNo, status, orderId } = req.body;
+    const { items, tableNo } = req.body;
 
     if (!items || items.length === 0) {
       return res.status(400).json({ msg: "No items were ordered" });
     }
-    if (!orderId) {
-      return res.status(400).json({ msg: "No order can be placed without order ID" });
-    }
+  
     if (!tableNo) {
       return res.status(400).json({ msg: "No table number provided" });
     }
-    if (!status) {
-      return res.status(400).json({ msg: "Order status is required" });
-    }
-
     const totalAmount = items.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
+      (sum, item) => sum + item.price * item.quantity,0);
     if (totalAmount <= 0) {
       return res
         .status (400)
         .json ({ msg: "Total amount must be greater than 0"});
     }
 
-    const newOrder = new Orders({
-      orderId,
+    const newOrder = new Orders({ 
       tableNo,
-      status,
       items,
       totalAmount
     });
-
+    
     await newOrder.save();
+    const DisplayOrderId = newOrder._id
+                            .toString()
+                            .slice(-6)
+                            .toUpperCase()
 
     res.status(201).json({
       success: true,
       message: "Order placed successfully",
       order: newOrder,
+      DisplayOrderId
     });
   } catch (error) {
     console.error("Error placing order:", error);
-    res.status(500).json({ message: "Internal Server Error" });
+    res.status(500).json({ 
+      message: "Internal Server Error",
+      error: error.message
+    });
   }
 }
  
 module.exports = { POSTRoute };
-
 
 module.exports = {
    GetEmpDetails,

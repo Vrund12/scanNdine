@@ -38,10 +38,13 @@ const router = createBrowserRouter([
         path: '/menu' ,
         element: <Menu/>
       },
-      
       {
         path:'/qr',
         element: <QR/>
+      },
+      {
+        path: '/userMenu',
+        element: <UserMenu />
       }
     ]
   },
