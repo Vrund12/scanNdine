@@ -25,12 +25,6 @@ export default function Sidebar() {
           </button>
         </Link>
 
-        {/* <Link to="/order-details">
-          <button className="w-full flex items-center gap-3 px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white">
-            <HandPlatterIcon size={20} />
-            <span>Order Details</span>
-          </button>
-        </Link> */}
         <Link to="/inventory">
           <button className="w-full flex items-center gap-3 px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white">
             <Warehouse size={20} />
@@ -58,12 +52,12 @@ export default function Sidebar() {
           </button>
         </Link> */}
 
-        <Link to="/settings">
+        {/* <Link to="/settings">
           <button className="w-full flex items-center gap-3 px-6 py-3 text-gray-300 hover:bg-gray-700 hover:text-white">
             <Settings size={20} />
             <span>Settings</span>
           </button>
-        </Link>
+        </Link> */}
       </nav>
     </div>
   );

@@ -3,7 +3,7 @@ import axios from "axios";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
-  const [visible, setVisible] = useState(false);
+  //const [visible, setVisible] = useState(false);
 
   useEffect(() => {
     axios.get("api/scanNdine/EmpDetails")
@@ -15,22 +15,21 @@ export default function Employees() {
     })
   });
 
-  const addEmployee = () => {};
+  //const addEmployee = () => {};
 
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-5">Employee Details</h2>
-      <button className="mb-5 bg-blue-400 rounded-2xl p-2 text-white    cursor-pointer hover:bg-white hover:text-black" 
+      {/* <button className="mb-5 bg-blue-400 rounded-2xl p-2 text-white    cursor-pointer hover:bg-white hover:text-black" 
         onClick={() => {
           setVisible(true)
           addEmployee()
         }}
       >
         Add Employee
-      </button>
+      </button> */}
 
-      { 
-        visible? {/* addEmployee from */}:<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {employees.map((emp) => (
           <div
             key={emp._id}
@@ -54,7 +53,7 @@ export default function Employees() {
           </div>
         ))}
       </div>
-      }
+      
 
     </div>
   );

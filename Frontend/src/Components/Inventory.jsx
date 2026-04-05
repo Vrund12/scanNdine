@@ -18,8 +18,8 @@ const Inventory = () => {
 
   const toggleAvailability = async (id, newStatus) => {
   try {
-    await axios.patch(`/api/scanNdine/menu/${id}/availability`, {
-      availability: newStatus,
+    await axios.patch(`/api/scanNdine/Inventory/${id}/availability`, {
+      Availability: newStatus,
     });
 
     // update UI without reload

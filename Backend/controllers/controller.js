@@ -1,4 +1,4 @@
-const EMP = require('../models/empDetails')
+const EMP = require ('../models/empDetails')
 const Inventory = require('../models/inventory')
 const Orders = require('../models/orderDetails')
 
@@ -97,22 +97,28 @@ async function markAsServed (req, res) {
   }
 };
 
-async function changeAvailability (req, res) {
-  try{
-    const {Availability} = req.body
+async function changeAvailability(req, res) {
+  try {
+    const { Availability } = req.body;
+
+    console.log("Incoming availability:", Availability);
+
     const InventDetails = await Inventory.findByIdAndUpdate(
       req.params.id,
-      {Availability: "available"},
-      {new: true}
-    )
+      { Availability },   // ✅ USE REQUEST VALUE
+      { new: true }
+    );
+
     res.json({
       success: true,
-      message: 'dish availability updated successfully',
+      message: "Dish availability updated successfully",
       InventDetails
-    })
-  }
-  catch (err) {
-    res.status(500).json({ success: false, message: err.message });
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: err.message
+    });
   }
 }
 
