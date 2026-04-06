@@ -1,6 +1,7 @@
 import React, { useState, useEffect} from "react";
 import axios from "axios";
 import OrderIdContext from "../Context/OrderIdContext";
+import PaymentButton from "./Paymentbutton";
 
 const UserMenu = () => {
    const [menu, setmenu] = useState([])
@@ -192,22 +193,29 @@ const [showBill, setShowBill] = useState(false);
         {bill?.order?.totalAmount && (
           <span>₹{bill.order.totalAmount}</span>
         )}
-
       </div>
 
       <p className="text-xs text-gray-500 mt-3 text-center">
         Please take a screenshot for your reference
       </p>
 
+      {/* Payment Button */}
+      <PaymentButton
+        orderDetails={{
+          totalAmount: bill.order.totalAmount,
+          orderId: bill.DisplayOrderId,
+        }}
+      />
+
       <button
         onClick={() => setShowBill(false)}
-        className="mt-4 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg"
+        className="mt-3 w-full bg-red-600 hover:bg-red-700 text-white py-2 rounded-lg"
       >
-         Close
-        </button>
-      </div>
+        Close
+      </button>
     </div>
-   )}
+  </div>
+)}
 
     </div>
   );

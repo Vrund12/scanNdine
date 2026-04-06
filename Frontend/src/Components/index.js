@@ -7,7 +7,7 @@ import Inventory from "./Inventory";
 import Settings from "./Settings";
 import Menu from "./Menu/Menu";
 import UserMenu from "./UserMenu";
+import PaymentButton from "./Paymentbutton";
 
 
-
-export  {SideBar, Footer, Home, EmpDetails,  Inventory, Settings, Menu, UserMenu}
+export  {SideBar, Footer, Home, EmpDetails,  Inventory, Settings, Menu, UserMenu, PaymentButton}
