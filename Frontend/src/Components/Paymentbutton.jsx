@@ -8,7 +8,7 @@ const PaymentButton = ({ orderDetails }) => {
     if (!loaded) return alert("Failed to load Razorpay. Check your connection.");
 
     // 2. Create order on your backend
-    const { data } = await fetch("/api/scanNdine/payment/create-order", {
+    const  {order} = await fetch("/api/scanNdine/payment/create-order", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
@@ -16,15 +16,17 @@ const PaymentButton = ({ orderDetails }) => {
         receipt: `order_${orderDetails.orderId}`,
       }),
     }).then(r => r.json());
+     
+    console.log("Backend response:", order)
 
     // 3. Open Razorpay modal
     const options = {
       key: import.meta.env.VITE_RAZORPAY_TEST_APIKEY,  // from .env
-      amount: data.order.amount,
-      currency: data.order.currency,
+      amount: order.amount,
+      currency: order.currency,
       name: "Your Store Name",
       description: "Order Payment",
-      order_id: data.order.id,  // Razorpay order ID from step 2
+      order_id: order.id,  // Razorpay order ID from step 2
 
       handler: async (response) => {
         // 4. Verify on backend
