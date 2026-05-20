@@ -1,18 +1,20 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Empform from "./EmpForm";
 
 export default function Employees() {
   const [employees, setEmployees] = useState([]);
-  //const [visible, setVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   useEffect(() => {
-    axios.get("api/scanNdine/EmpDetails")
-    .then((response) => {
-      setEmployees(response.data)
-    })
-    .catch((error) => {
-      console.log(error);
-    })
+    axios
+      .get("api/scanNdine/EmpDetails")
+      .then((response) => {
+        setEmployees(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
   });
 
   //const addEmployee = () => {};
@@ -20,14 +22,20 @@ export default function Employees() {
   return (
     <div className="p-6">
       <h2 className="text-2xl font-bold mb-5">Employee Details</h2>
-      {/* <button className="mb-5 bg-blue-400 rounded-2xl p-2 text-white    cursor-pointer hover:bg-white hover:text-black" 
+      <button
+        className="mb-5 bg-blue-400 rounded-2xl p-2 text-white    cursor-pointer hover:bg-white hover:text-black"
         onClick={() => {
-          setVisible(true)
-          addEmployee()
+          setVisible(true);
         }}
       >
         Add Employee
-      </button> */}
+      </button>
+
+      {visible && (
+        <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+          <Empform closeForm={() => setVisible(false)} />
+        </div>
+      )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {employees.map((emp) => (
@@ -53,8 +61,6 @@ export default function Employees() {
           </div>
         ))}
       </div>
-      
-
     </div>
   );
 }
