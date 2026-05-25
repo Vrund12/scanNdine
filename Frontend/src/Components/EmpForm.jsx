@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { ImagePlus, ChevronDown } from "lucide-react";
-
+import axios from 'axios'
 export default function EmpForm({closeForm}) {
   const [name, setName] = useState("");
   const [mobile, setMobile] = useState("");
@@ -17,8 +17,24 @@ export default function EmpForm({closeForm}) {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+  const handleSubmit = async (e) => {
+    e.preventDefault()
+    const formData = new FormData()
+    formData.append("name", name)
+    formData.append("mobile", mobile)
+    formData.append("designation", designation)
+    formData.append("photo", fileRef.current.files[0])
+
+    try{
+      await axios.post("api/scanNdine/AddEmployee", formData)
+      alert("Employee data added successfully!")
+      closeForm()
+    }
+    catch(error) {
+     console.error("error occurred: ", error)
+     alert("Submission failed. Try again")
+     closeForm() 
+    }
 
     console.log({
       name,
@@ -26,7 +42,6 @@ export default function EmpForm({closeForm}) {
       designation,
       photo: fileRef.current.files[0],
     });
-    closeForm()
   };
 
   return (

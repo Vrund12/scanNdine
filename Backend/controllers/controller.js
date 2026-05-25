@@ -1,6 +1,7 @@
 const EMP = require ('../models/empDetails')
 const Inventory = require('../models/inventory')
 const Orders = require('../models/orderDetails')
+const {uploadOnCloudinary} = require('../utils/cloudinary')
 
 async function GetEmpDetails (req, res) {
     try{
@@ -122,6 +123,32 @@ async function changeAvailability(req, res) {
   }
 }
 
+async function AddEmployee (req, res) {
+  const {name, mobile, designation} = req.body
+  const localfile = req.file.path
+  const profileUrl = await uploadOnCloudinary(localfile)
+ 
+  console.log("secure url:", profileUrl)
+  try {
+    const details = new EMP({
+      EmpName: name,
+      ContactNo: mobile,
+      EmpDuty: designation,
+      EmpPhoto: profileUrl
+    })
+    await details.save()
+    return res.status(201).json({
+      success: true
+    })
+  } catch (error) {
+    console.error("Error placing order:", error);
+    res.status(500).json({ 
+      message: "Internal Server Error",
+      error: error.message
+    });
+  }
+}
+
 
 module.exports = { POSTRoute };
 
@@ -131,5 +158,6 @@ module.exports = {
    GetOrderDetails,
    POSTRoute,
    markAsServed,
-   changeAvailability
+   changeAvailability,
+   AddEmployee
 }

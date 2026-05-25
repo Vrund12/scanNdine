@@ -1,7 +1,8 @@
 const express = require('express')
-const {GetEmpDetails, GetInvenDetails, GetOrderDetails,POSTRoute, markAsServed, changeAvailability} = require('../controllers/controller')
+const {GetEmpDetails, GetInvenDetails, GetOrderDetails,POSTRoute, markAsServed, changeAvailability, AddEmployee} = require('../controllers/controller')
 const Razorpay = require("razorpay");
 const crypto = require("crypto");
+const {upload} = require("../middlewares/multer")
 
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_TEST_APIKEY,
@@ -10,6 +11,7 @@ const razorpay = new Razorpay({
 const router = express.Router()
 
 router.get('/EmpDetails', GetEmpDetails)
+router.post('/AddEmployee', upload.single('photo'), AddEmployee)
 router.get('/Inventory', GetInvenDetails)
 router.get('/Order-details', GetOrderDetails)
 router.get('/Menu', GetInvenDetails)
